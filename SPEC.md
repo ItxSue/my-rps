@@ -27,7 +27,11 @@ Results are from the **player’s perspective**. `determine_winner(player, compu
 
 ### Agreed plan
 
-Before implementation, predict one matchup and explain it with your local coding agent. Discuss a short plan and checks. Once it makes sense, ask the agent to replace this paragraph with the agreed plan, preserving the expected results above. Continue in the same chat.
+Implement one independent round using the supplied interface and server. Return player-perspective win, lose, or tie for all nine matchups. No scoring, storage, accounts, or framework changes.
+
+Student prediction: Rock against Paper means the computer wins. Paper beats rock, so the expected return is `lose`; this is a valid losing round. The student agreed to continue with the proposed scope.
+
+Verify nine explicit unit outcomes, a real request/result integration test, and a real Chromium round with replay. Fix only computer randomness in positive tests. Reuse the supplied HTTP 400 checks for missing and unsupported moves such as `lizard`. Run the full check.py and review all changes before student browser review.
 
 ### Checks
 
@@ -44,7 +48,11 @@ Use `unit`, `integration`, and `e2e` pytest markers. Run `.venv/bin/python check
 
 ### Work record
 
-- Issue: add your own issue URL.
-- Pull request / CI: add actual URLs when they exist.
-- Implementation: **Not implemented.** The shell is supplied; `game.py` is unfinished.
-- Checks: **Rules not verified.** Supplied request/browser tests cover the shell only. After implementation, record actual full-check results and your browser observations here; put detailed results in the PR. Passing formatting and analysis alone is not evidence of correct rules.
+- Issue: https://github.com/ItxSue/my-rps/issues/1.
+- Pull request: https://github.com/ItxSue/my-rps/pull/2.
+- CI run: https://github.com/ItxSue/my-rps/actions/runs/41577679776. The latest PR commit checks are available at https://github.com/ItxSue/my-rps/pull/2/checks; merge only after Python checks passes on that final commit.
+- Implementation: [game.py](game.py) implements ties, three winning pairs, and losses. [Unit/request tests](tests/test_game.py) cover nine literal outcomes and a real submitted loss. [Browser test](tests/e2e/test_round.py) checks a real loss and keyboard replay to a win.
+- Checks: Full `.venv/bin/python check.py` passed: Black (11 files unchanged), Pylint, 23 non-browser tests, and 6 Chromium tests. Reviewed the diff and both new test files against all nine expected results; `git diff --check` passed. Supplied negative checks and shared settings remain intact.
+- Test explanation (AI-provided): the literal `("rock", "paper", "lose")` case and `assert determine_winner(player, computer) == expected` catch incorrectly returning `win` or `tie` for the student's predicted losing matchup.
+- Browser review (Codex operating Safari at the student's request): clicked Rock; computer chose Paper; observed **Computer wins**, consistent with paper beating rock. Used Option+Tab to focus Rock, Option+Tab again to focus Paper, and Enter to replay; observed Paper against Scissors and **Computer wins**, consistent with scissors beating paper. Both choices updated, the unfinished notice was absent, and keyboard replay worked.
+- Help received: Codex assisted with setup, implementation, tests, test explanation, browser operation, and review. The student supplied the initial prediction; the completed-game observations above are agent-assisted, not a claim of independent student play.
