@@ -49,7 +49,8 @@ Use `unit`, `integration`, and `e2e` pytest markers. Run `.venv/bin/python check
 ### Work record
 
 - Issue: https://github.com/ItxSue/my-rps/issues/1.
-- Pull request / CI: add actual URLs when they exist.
+- Pull request: https://github.com/ItxSue/my-rps/pull/2.
+- CI run: https://github.com/ItxSue/my-rps/actions/runs/41577679776. The latest PR commit checks are available at https://github.com/ItxSue/my-rps/pull/2/checks; merge only after Python checks passes on that final commit.
 - Implementation: [game.py](game.py) implements ties, three winning pairs, and losses. [Unit/request tests](tests/test_game.py) cover nine literal outcomes and a real submitted loss. [Browser test](tests/e2e/test_round.py) checks a real loss and keyboard replay to a win.
 - Checks: Full `.venv/bin/python check.py` passed: Black (11 files unchanged), Pylint, 23 non-browser tests, and 6 Chromium tests. Reviewed the diff and both new test files against all nine expected results; `git diff --check` passed. Supplied negative checks and shared settings remain intact.
 - Test explanation (AI-provided): the literal `("rock", "paper", "lose")` case and `assert determine_winner(player, computer) == expected` catch incorrectly returning `win` or `tie` for the student's predicted losing matchup.
